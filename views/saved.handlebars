@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="blue-text display text-center">MPR News</h1>
+        <h1 class="blue-text display text-center">Saved Articles</h1>
     </div>
 </div>
 
@@ -11,7 +11,8 @@
             <div class="card">
                 <div class="card-header">
                     <a href="{{link}}"><h4>{{title}}</h4></a>
-                    <button class="btn btn-primary save-btn" id="{{_id}}">Save Article</button>
+                    <button class="btn btn-danger delete-btn" id="{{_id}}">Delete from Saved</button>
+                    <button class="btn btn-primary notes-btn" id="{{_id}}">Article Notes</button>
                 </div>
                 <div class="card-body">
                     <p>{{body}}</p>
