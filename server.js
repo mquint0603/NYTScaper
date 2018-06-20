@@ -98,11 +98,16 @@ app.get("/scrape", function(req, res) {
   })
 
   app.get("/articles/:id", function(req, res) {
-    db.Article.findOne({_id: req.params.id})
-      .populate("note")
-      .then(function(dbArticle) {
-        res.json(dbArticle)
-      })
+    db.Article.findOne({ _id: req.params.id })
+    .populate("note")
+    .then(function(dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
   });
 
   app.post("/save/:id", function(req, res) {
