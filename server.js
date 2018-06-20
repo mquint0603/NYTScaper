@@ -54,6 +54,7 @@ app.get("/scrape", function(req, res) {
         })
       });
       res.send("Scrape Complete");
+      
     });
   });
 
@@ -112,6 +113,13 @@ app.get("/scrape", function(req, res) {
 
   app.post("/save/:id", function(req, res) {
     db.Article.findOneAndUpdate({_id: req.params.id}, {$set: {saved: true}})
+      .then(function(dbArticle) {
+        res.json(dbArticle)
+      })
+  });
+
+  app.post("/unsave/:id", function(req, res) {
+    db.Article.findOneAndUpdate({_id: req.params.id}, {$set: {saved: false}})
       .then(function(dbArticle) {
         res.json(dbArticle)
       })
