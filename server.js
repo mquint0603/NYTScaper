@@ -142,6 +142,12 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+app.delete("/articles/notes/:id", function(req,res) {
+  db.Note.deleteOne({_id: req.params.id}).then(function(data){
+    console.log(data)
+  })
+})
+
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
   });

@@ -48,7 +48,8 @@ $("#modalLaunch").on("click", function(){
             result.note.forEach((item) => {
 
                 let noteP = $("<p>").text(item.body);
-                $("#noteDisplay").append(noteP)
+                let delBtn = $("<button>Delete</button>").addClass("delete btn btn-sm btn-danger").attr("data-id", item._id)
+                $("#noteDisplay").append(noteP, delBtn)
             })
             
         } else if (!result.note){
@@ -68,6 +69,17 @@ $("#saveNote").on("click", function(){
             body: newNote
         }
     }).then(function (result) {
+        location.reload()
+    })
+})
+
+$(".notes").on("click", ".delete", function(){
+    let noteID = $(this).attr("data-id")
+    console.log(noteID)
+    $.ajax({
+        type: "DELETE",
+        url: `/articles/notes/${noteID}`
+    }).then(function(result){
         location.reload()
     })
 })
