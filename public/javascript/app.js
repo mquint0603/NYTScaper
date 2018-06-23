@@ -45,11 +45,29 @@ $("#modalLaunch").on("click", function(){
 
         console.log(result)
         if(result.note){
-            $("#noteDisplay").text(result.note)
+            result.note.forEach((item) => {
+
+                let noteP = $("<p>").text(item.body);
+                $("#noteDisplay").append(noteP)
+            })
+            
         } else if (!result.note){
             $("#noteDisplay").text("No notes for this article.")
         }
     })
 })
 
-//ajax call to post note after clicking button on modal
+$("#saveNote").on("click", function(){
+    let newNote = $("#newNote").val();
+    let artID = $(this).attr("data-id")
+    // console.log(newNote)
+    $.ajax({
+        type: "POST",
+        url: `/articles/${artID}`,
+        data: {
+            body: newNote
+        }
+    }).then(function (result) {
+        location.reload()
+    })
+})
