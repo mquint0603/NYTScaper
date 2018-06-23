@@ -31,9 +31,12 @@ $(".scrape").on("click", function(){
     })
 })
 
-$(".notes-btn").on("click", function(){
+$("#modalLaunch").on("click", function(){
     // set up modal to launch
-    let thisID = $(this).attr("id")
+    let thisID = $(this).attr("data-id")
+
+    $("#saveNote").attr("data-id", thisID)
+    $("#noteDisplay").text("")
     // console.log($(this).attr("id"))
     $.ajax({
         type: "GET",
@@ -41,8 +44,11 @@ $(".notes-btn").on("click", function(){
     }).then(function (result) {
 
         console.log(result)
-
-        //populate modal with result.notes or "no notes"
+        if(result.note){
+            $("#noteDisplay").text(result.note)
+        } else if (!result.note){
+            $("#noteDisplay").text("No notes for this article.")
+        }
     })
 })
 

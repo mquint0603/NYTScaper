@@ -28,13 +28,10 @@ app.set("view engine", "handlebars");
 
 
 app.get("/scrape", function(req, res) {
-    // First, we grab the body of the html with request
     request("http://www.mprnews.org", function(error, response, html){
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(html);
   
       $(".described").each(function(i, element) {
-        // Save an empty result object
         var result = {};
         result.title = $(this).children("a").children("h2").text();
         result.link = $(this).children("a").attr("href");
@@ -69,10 +66,12 @@ app.get("/scrape", function(req, res) {
     });
   });
 
+
   app.get("/", function(req, res) {
-    db.Article.find({saved: false}, function(error, data) {
-      if (error) {
-        console.log(error);
+
+    db.Article.find().sort({ _id: -1 }).exec(function(err, data) {
+      if (err) {
+        console.log(err);
       }
       else {
         const hbsData = {
@@ -81,7 +80,7 @@ app.get("/scrape", function(req, res) {
         res.render("index", hbsData);
       }
     });
-  })
+  });
 
   app.get("/saved", function (req, res) {
     db.Article.find({saved: true}, function(error, data) {
@@ -126,6 +125,25 @@ app.get("/scrape", function(req, res) {
   });
 
 
+  // Route for saving/updating an Article's associated Note
+app.post("/articles/:id", function(req, res) {
+  // Create a new note and pass the req.body to the entry
+  db.Note.create(req.body)
+    .then(function(newNote) {
+      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
+      // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
+      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: newNote._id }, { new: true });
+    })
+    .then(function(dbArticle) {
+      // If we were able to successfully update an Article, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
 
 app.listen(PORT, function() {
     console.log("App running on port " + PORT + "!");
