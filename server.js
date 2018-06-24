@@ -68,7 +68,6 @@ app.get("/scrape", function(req, res) {
 
 
   app.get("/", function(req, res) {
-
     db.Article.find().sort({ _id: -1 }).exec(function(err, data) {
       if (err) {
         console.log(err);
@@ -96,6 +95,17 @@ app.get("/scrape", function(req, res) {
       }
     })
   })
+
+  //CLIENT SIDE: on document ready, or when they click link to saved articles, send a post request with local storage data.
+      //if it's going to render a page on document ready, I probably need a separate js file and only link that to the saved page.
+      //then take articles and put them on page with jQuery? 
+  // parse local storage string, for each item in saved object, find the article and put it in a handlebars object. Render saved.
+
+  // app.post("articles/saved", function(req, res) {
+  //   console.log(req)
+
+  // })
+
 
   app.get("/articles/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
@@ -129,12 +139,10 @@ app.get("/scrape", function(req, res) {
 app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
     .then(function(newNote) {
-      // If a Note was created successfully, find one Article with an `_id` equal to `req.params.id`. Update the Article to be associated with the new Note
-      // { new: true } tells the query that we want it to return the updated User -- it returns the original by default
-      // Since our mongoose query returns a promise, we can chain another `.then` which receives the result of the query
       return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: {note: newNote._id} }, { new: true });
     })
     .then(function(dbArticle) {
+      console.log("created")
       res.json(dbArticle);
     })
     .catch(function(err) {
@@ -144,7 +152,7 @@ app.post("/articles/:id", function(req, res) {
 
 app.delete("/articles/notes/:id", function(req,res) {
   db.Note.deleteOne({_id: req.params.id}).then(function(data){
-    console.log(data)
+    res.json(data)
   })
 })
 

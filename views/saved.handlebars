@@ -12,7 +12,7 @@
                 <div class="card-header">
                     <a href="{{link}}"><h4>{{title}}</h4></a>
                     <button class="btn btn-danger delete-btn" id="{{_id}}">Delete from Saved</button>
-                    <button class="btn btn-primary notes-btn" data-toggle="modal" data-target="#notesModal" data-id="{{_id}}" id="modalLaunch">Article Notes</button>
+                    <button class="btn btn-primary notes-btn" data-toggle="modal" data-target="#notesModal" data-id="{{_id}}" id="modalLaunchbn">Article Notes</button>
                 </div>
                 <div class="card-body">
                     <p>{{body}}</p>
@@ -48,7 +48,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="saveNote">Save note</button>
+        <button type="button" class="btn btn-primary" id="saveNote" data-id="">Save note</button>
       </div>
     </div>
   </div>

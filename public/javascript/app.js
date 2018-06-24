@@ -31,11 +31,13 @@ $(".scrape").on("click", function(){
     })
 })
 
-$("#modalLaunch").on("click", function(){
-    // set up modal to launch
+$(".articles").on("click", "#modalLaunchbn", function(){
+    
     let thisID = $(this).attr("data-id")
+    console.log(thisID)
 
     $("#saveNote").attr("data-id", thisID)
+    $("#saveNote").addClass("test")
     $("#noteDisplay").text("")
     // console.log($(this).attr("id"))
     $.ajax({
@@ -43,7 +45,7 @@ $("#modalLaunch").on("click", function(){
         url: `/articles/${thisID}`, 
     }).then(function (result) {
 
-        console.log(result)
+        // console.log(result)
         if(result.note){
             result.note.forEach((item) => {
 
@@ -57,6 +59,8 @@ $("#modalLaunch").on("click", function(){
         }
     })
 })
+
+
 
 $("#saveNote").on("click", function(){
     let newNote = $("#newNote").val();
