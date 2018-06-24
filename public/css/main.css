@@ -1,0 +1,42 @@
+.save-btn, .notes-btn {
+    float: right;
+
+}
+.btn-danger {
+    float: right;
+}
+
+.navbar, .card-header {
+    background-color: #03344d;
+}
+
+.saved-link {
+    padding-top: 15px;
+}
+
+.white {
+    color: white;
+}
+
+body {
+    background-color: #ededed;
+}
+
+.padded {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#noteDisplay p {
+    display: inline-block;
+}
+
+.jumbotron-fluid {
+    background-image: url(../images/newsHeader.jpg);
+    background-size: cover;
+    /* height: 400px; */
+}
+
+.notes-btn {
+    margin-right: 5px;
+}
