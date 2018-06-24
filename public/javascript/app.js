@@ -4,7 +4,7 @@ $(".save-btn").on("click", function(){
     console.log($(this).attr("id"))
     $.ajax({
         type: "POST",
-        url: `/save/${thisID}`, 
+        url: `/articles/save/${thisID}`, 
     }).then(function (result) {
         location.reload()
     })
@@ -16,7 +16,7 @@ $(".delete-btn").on("click", function(){
     console.log($(this).attr("id"))
     $.ajax({
         type: "POST",
-        url: `/unsave/${thisID}`, 
+        url: `/articles/unsave/${thisID}`, 
     }).then(function (result) {
         location.reload()
     })
@@ -25,7 +25,7 @@ $(".delete-btn").on("click", function(){
 $(".scrape").on("click", function(){
     $.ajax({
         type: "GET",
-        url: `/scrape`, 
+        url: `/articles/scrape`, 
     }).then(function (result) {
         location.href = "/"
     })
