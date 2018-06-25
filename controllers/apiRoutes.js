@@ -1,8 +1,10 @@
 var db = require("../models");
+var cheerio = require("cheerio");
+var request = require("request");
 
 module.exports = function(app) {
 
-app.get("/articles/scrape", function(req, res) {
+app.get("/scrape", function(req, res) {
     request("http://www.mprnews.org", function(error, response, html){
       var $ = cheerio.load(html);
   
