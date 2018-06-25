@@ -5,23 +5,21 @@ var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var request = require("request");
 
-// Require all models
 var db = require("./models");
-
-
 
 var PORT = 8080;
 
-// Initialize Express
 var app = express();
 
 app.use(logger("dev"));
-// Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
-// Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/mongoHeadlines");
+// mongoose.connect("mongodb://localhost/mongoHeadlines");
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI);
+
 
 var exphbs = require("express-handlebars");
 
