@@ -25,7 +25,7 @@ $(".delete-btn").on("click", function(){
 $(".scrape").on("click", function(){
     $.ajax({
         type: "GET",
-        url: `/articles/scrape`, 
+        url: `/scrape`, 
     }).then(function (result) {
         location.href = "/"
     })
